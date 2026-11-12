@@ -1,0 +1,234 @@
+{
+  "folder": "C:\\Users\\Irika\\.grok\\silvia-dashboard\\imagine-drafts",
+  "source": "image_gen",
+  "count": 25,
+  "layouts": 5,
+  "schemes_per_layout": 5,
+  "items": [
+    {
+      "file": "layout-01-overview-scheme-01-midnight-teal-gold.jpg",
+      "layout_id": "overview-named-cards",
+      "layout_n": 1,
+      "scheme_n": 1,
+      "scheme": "midnight-teal-gold",
+      "source": "1.jpg",
+      "bytes": 227827
+    },
+    {
+      "file": "layout-01-overview-scheme-02-cream-paper.jpg",
+      "layout_id": "overview-named-cards",
+      "layout_n": 1,
+      "scheme_n": 2,
+      "scheme": "cream-paper",
+      "source": "6.jpg",
+      "bytes": 298599
+    },
+    {
+      "file": "layout-01-overview-scheme-03-nebula-purple-cyan.jpg",
+      "layout_id": "overview-named-cards",
+      "layout_n": 1,
+      "scheme_n": 3,
+      "scheme": "nebula-purple-cyan",
+      "source": "3.jpg",
+      "bytes": 235810
+    },
+    {
+      "file": "layout-01-overview-scheme-04-moss-walnut.jpg",
+      "layout_id": "overview-named-cards",
+      "layout_n": 1,
+      "scheme_n": 4,
+      "scheme": "moss-walnut",
+      "source": "8.jpg",
+      "bytes": 290650
+    },
+    {
+      "file": "layout-01-overview-scheme-05-ice-blue-silver.jpg",
+      "layout_id": "overview-named-cards",
+      "layout_n": 1,
+      "scheme_n": 5,
+      "scheme": "ice-blue-silver",
+      "source": "7.jpg",
+      "bytes": 226545
+    },
+    {
+      "file": "layout-02-giant-tree-scheme-01-oled-cyan.jpg",
+      "layout_id": "live-diagrams-giant-tree",
+      "layout_n": 2,
+      "scheme_n": 1,
+      "scheme": "oled-cyan",
+      "source": "2.jpg",
+      "bytes": 247873
+    },
+    {
+      "file": "layout-02-giant-tree-scheme-02-parchment-bronze.jpg",
+      "layout_id": "live-diagrams-giant-tree",
+      "layout_n": 2,
+      "scheme_n": 2,
+      "scheme": "parchment-bronze",
+      "source": "4.jpg",
+      "bytes": 318630
+    },
+    {
+      "file": "layout-02-giant-tree-scheme-03-magenta-night.jpg",
+      "layout_id": "live-diagrams-giant-tree",
+      "layout_n": 2,
+      "scheme_n": 3,
+      "scheme": "magenta-night",
+      "source": "10.jpg",
+      "bytes": 220080
+    },
+    {
+      "file": "layout-02-giant-tree-scheme-04-forest-gold.jpg",
+      "layout_id": "live-diagrams-giant-tree",
+      "layout_n": 2,
+      "scheme_n": 4,
+      "scheme": "forest-gold",
+      "source": "5.jpg",
+      "bytes": 304830
+    },
+    {
+      "file": "layout-02-giant-tree-scheme-05-coral-sand.jpg",
+      "layout_id": "live-diagrams-giant-tree",
+      "layout_n": 2,
+      "scheme_n": 5,
+      "scheme": "coral-sand",
+      "source": "13.jpg",
+      "bytes": 245628
+    },
+    {
+      "file": "layout-03-command-hud-scheme-01-amber-terminal.jpg",
+      "layout_id": "command-center-hud",
+      "layout_n": 3,
+      "scheme_n": 1,
+      "scheme": "amber-terminal",
+      "source": "9.jpg",
+      "bytes": 288053
+    },
+    {
+      "file": "layout-03-command-hud-scheme-02-arctic-white.jpg",
+      "layout_id": "command-center-hud",
+      "layout_n": 3,
+      "scheme_n": 2,
+      "scheme": "arctic-white",
+      "source": "11.jpg",
+      "bytes": 280775
+    },
+    {
+      "file": "layout-03-command-hud-scheme-03-deep-crimson.jpg",
+      "layout_id": "command-center-hud",
+      "layout_n": 3,
+      "scheme_n": 3,
+      "scheme": "deep-crimson",
+      "source": "12.jpg",
+      "bytes": 283575
+    },
+    {
+      "file": "layout-03-command-hud-scheme-04-copper-rust.jpg",
+      "layout_id": "command-center-hud",
+      "layout_n": 3,
+      "scheme_n": 4,
+      "scheme": "copper-rust",
+      "source": "14.jpg",
+      "bytes": 396161
+    },
+    {
+      "file": "layout-03-command-hud-scheme-05-lime-matrix.jpg",
+      "layout_id": "command-center-hud",
+      "layout_n": 3,
+      "scheme_n": 5,
+      "scheme": "lime-matrix",
+      "source": "17.jpg",
+      "bytes": 329373
+    },
+    {
+      "file": "layout-04-split-host-catalog-scheme-01-navy-ivory.jpg",
+      "layout_id": "split-host-catalog",
+      "layout_n": 4,
+      "scheme_n": 1,
+      "scheme": "navy-ivory",
+      "source": "15.jpg",
+      "bytes": 264358
+    },
+    {
+      "file": "layout-04-split-host-catalog-scheme-02-sunset-orange.jpg",
+      "layout_id": "split-host-catalog",
+      "layout_n": 4,
+      "scheme_n": 2,
+      "scheme": "sunset-orange",
+      "source": "16.jpg",
+      "bytes": 237920
+    },
+    {
+      "file": "layout-04-split-host-catalog-scheme-03-lavender-dusk.jpg",
+      "layout_id": "split-host-catalog",
+      "layout_n": 4,
+      "scheme_n": 3,
+      "scheme": "lavender-dusk",
+      "source": "18.jpg",
+      "bytes": 243873
+    },
+    {
+      "file": "layout-04-split-host-catalog-scheme-04-slate-steel.jpg",
+      "layout_id": "split-host-catalog",
+      "layout_n": 4,
+      "scheme_n": 4,
+      "scheme": "slate-steel",
+      "source": "20.jpg",
+      "bytes": 258716
+    },
+    {
+      "file": "layout-04-split-host-catalog-scheme-05-jade-cream.jpg",
+      "layout_id": "split-host-catalog",
+      "layout_n": 4,
+      "scheme_n": 5,
+      "scheme": "jade-cream",
+      "source": "19.jpg",
+      "bytes": 235140
+    },
+    {
+      "file": "layout-05-memory-archipelago-scheme-01-candlelit-mahogany.jpg",
+      "layout_id": "memory-archipelago",
+      "layout_n": 5,
+      "scheme_n": 1,
+      "scheme": "candlelit-mahogany",
+      "source": "22.jpg",
+      "bytes": 347918
+    },
+    {
+      "file": "layout-05-memory-archipelago-scheme-02-frosted-glass.jpg",
+      "layout_id": "memory-archipelago",
+      "layout_n": 5,
+      "scheme_n": 2,
+      "scheme": "frosted-glass",
+      "source": "23.jpg",
+      "bytes": 199820
+    },
+    {
+      "file": "layout-05-memory-archipelago-scheme-03-gold-leaf-charcoal.jpg",
+      "layout_id": "memory-archipelago",
+      "layout_n": 5,
+      "scheme_n": 3,
+      "scheme": "gold-leaf-charcoal",
+      "source": "21.jpg",
+      "bytes": 318035
+    },
+    {
+      "file": "layout-05-memory-archipelago-scheme-04-rose-quartz.jpg",
+      "layout_id": "memory-archipelago",
+      "layout_n": 5,
+      "scheme_n": 4,
+      "scheme": "rose-quartz",
+      "source": "24.jpg",
+      "bytes": 217764
+    },
+    {
+      "file": "layout-05-memory-archipelago-scheme-05-electric-indigo.jpg",
+      "layout_id": "memory-archipelago",
+      "layout_n": 5,
+      "scheme_n": 5,
+      "scheme": "electric-indigo",
+      "source": "25.jpg",
+      "bytes": 249885
+    }
+  ]
+}

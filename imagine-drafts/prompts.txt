@@ -1,0 +1,31 @@
+layout-01 overview-named-cards
+  scheme-01 midnight-teal-gold: Overview named cards, midnight teal and gold
+  scheme-02 cream-paper: Overview named cards, cream paper and terracotta
+  scheme-03 nebula-purple-cyan: Overview named cards, nebula purple and cyan
+  scheme-04 moss-walnut: Overview named cards, moss green and walnut
+  scheme-05 ice-blue-silver: Overview named cards, ice blue and silver
+layout-02 live-diagrams-giant-tree
+  scheme-01 oled-cyan: Giant boxed tree, OLED black and cyan
+  scheme-02 parchment-bronze: Giant boxed tree, parchment and bronze
+  scheme-03 magenta-night: Giant boxed tree, magenta night
+  scheme-04 forest-gold: Giant boxed tree, forest green and gold
+  scheme-05 coral-sand: Giant boxed tree, coral and sand
+layout-03 command-center-hud
+  scheme-01 amber-terminal: Command HUD, amber terminal
+  scheme-02 arctic-white: Command HUD, arctic white
+  scheme-03 deep-crimson: Command HUD, deep crimson
+  scheme-04 copper-rust: Command HUD, copper rust
+  scheme-05 lime-matrix: Command HUD, lime matrix
+layout-04 split-host-catalog
+  scheme-01 navy-ivory: Split butler/host + catalog, navy ivory
+  scheme-02 sunset-orange: Split butler/host + catalog, sunset orange
+  scheme-03 lavender-dusk: Split butler/host + catalog, lavender dusk
+  scheme-04 slate-steel: Split butler/host + catalog, slate steel
+  scheme-05 jade-cream: Split butler/host + catalog, jade cream
+layout-05 memory-archipelago
+  scheme-01 candlelit-mahogany: Memory archipelago, candlelit mahogany
+  scheme-02 frosted-glass: Memory archipelago, frosted glass
+  scheme-03 gold-leaf-charcoal: Memory archipelago, gold leaf charcoal
+  scheme-04 rose-quartz: Memory archipelago, rose quartz
+  scheme-05 electric-indigo: Memory archipelago, electric indigo
+All 25 generated via Grok Build image_gen (xAI Imagine) under SuperGrok Heavy.
