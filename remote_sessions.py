@@ -132,7 +132,7 @@ class LiveOps:
         # setting. A peer never sends it.
         launch_new_session(
             resume_session=session_id or None,
-            background=session_background(session_id or ""),
+            background=session_background(session_id or "new"),
         )
 
     def submit(self, session_id: str, text: str) -> list[str]:
@@ -351,6 +351,12 @@ def handle_client(conn: socket.socket, peer: str, peers: set[str], ops: Any) -> 
     finally:
         try:
             conn.shutdown(socket.SHUT_WR)
+        except OSError:
+            pass
+        try:
+            conn.settimeout(0.3)
+            while conn.recv(4096):
+                pass
         except OSError:
             pass
         try:

@@ -753,13 +753,42 @@ class _Started:
         self.pid = pid
 
 
-def _after_launch(previous_window: int, background: bool) -> None:
+def _hide_process_windows(pid: int) -> None:
+    """SW_HIDE every window of a background copy. Do not activate any of them."""
+    if os.name != "nt" or pid <= 0:
+        return
+    user32 = _user32()
+    enum_proc = ctypes.WINFUNCTYPE(wintypes.BOOL, wintypes.HWND, wintypes.LPARAM)
+    user32.EnumWindows.argtypes = (enum_proc, wintypes.LPARAM)
+    user32.EnumWindows.restype = wintypes.BOOL
+    user32.GetWindowThreadProcessId.argtypes = (wintypes.HWND, ctypes.POINTER(wintypes.DWORD))
+    user32.GetWindowThreadProcessId.restype = wintypes.DWORD
+    user32.ShowWindow.argtypes = (wintypes.HWND, ctypes.c_int)
+    user32.ShowWindow.restype = wintypes.BOOL
+    found: list[Any] = []
+
+    def _enum(hwnd: Any, _lparam: Any) -> bool:
+        proc_id = wintypes.DWORD()
+        user32.GetWindowThreadProcessId(hwnd, ctypes.byref(proc_id))
+        if int(proc_id.value) == int(pid):
+            found.append(hwnd)
+        return True
+
+    user32.EnumWindows(enum_proc(_enum), 0)
+    for hwnd in found:
+        user32.ShowWindow(hwnd, 0)
+
+
+def _after_launch(previous_window: int, background: bool, pid: int = 0) -> None:
     """Return the owner's window to the front after a visible launch.
 
-    A background launch shows no window, so it leaves the foreground alone and
-    never calls SetForegroundWindow or ShowWindow for the launched copy.
+    A background launch hides the copy and leaves the foreground alone.
+    It never calls SetForegroundWindow for that copy.
     """
-    if background or previous_window <= 0:
+    if background:
+        _hide_process_windows(pid)
+        return
+    if previous_window <= 0:
         return
     _user32().SetForegroundWindow(previous_window)
 
@@ -862,7 +891,7 @@ def _shell_execute(file: str, parameters: str, directory: str, background: bool 
     if pid <= 0:
         raise OSError("the launcher did not return a process")
     time.sleep(1.2)
-    _after_launch(previous, background)
+    _after_launch(previous, background, pid)
     return _Started(pid)
 
 

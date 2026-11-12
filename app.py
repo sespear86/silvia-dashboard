@@ -2077,11 +2077,25 @@ class SilviaDashboard(tk.Tk):
                     anchor="nw",
                     font=("Segoe UI", 12, "bold"),
                 )
+                from sessions_live import session_background
+
+                new_on = session_background("new")
+                tx0, tx1 = width - 152, width - 32
+                self.canvas.create_rectangle(tx0, y + 6, tx1, y + 30, fill=pal["card"], outline=pal["accent"] if new_on else pal["muted"])
+                self.canvas.create_text(
+                    (tx0 + tx1) // 2,
+                    y + 10,
+                    text="Background on" if new_on else "Background off",
+                    fill=pal["accent"] if new_on else pal["muted"],
+                    anchor="n",
+                    font=("Segoe UI", 9, "bold"),
+                )
+                self.hits.append({"id": "background:new", "x0": tx0, "x1": tx1, "y0": y, "y1": y + 36})
                 self.hits.append(
                     {
                         "id": "new-session",
                         "x0": 32,
-                        "x1": width - 24,
+                        "x1": tx0 - 8,
                         "y0": y,
                         "y1": y + 36,
                         "device": device,

@@ -179,3 +179,19 @@ def test_remote_list_submit_key_and_watch_work_for_a_background_session(monkeypa
     finally:
         stop.set()
         server.close()
+
+
+def test_a_new_remote_session_uses_the_new_toggle(monkeypatch, tmp_path: Path):
+    settings = tmp_path / "session-settings.json"
+    monkeypatch.setattr(sessions_live, "session_settings_path", lambda grok_home=None: settings)
+    sessions_live.set_session_background("new", True)
+    seen: list[bool] = []
+
+    def fake_launch(resume_session=None, background=False, **kwargs):
+        seen.append(bool(background))
+        return sessions_live._Started(4)
+
+    monkeypatch.setattr(sessions_live, "launch_new_session", fake_launch)
+    remote_sessions.LiveOps().launch(None)
+    remote_sessions.LiveOps().launch("abc123")
+    assert seen == [True, False]
