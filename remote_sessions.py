@@ -126,9 +126,14 @@ class LiveOps:
         return _rows(session_history(active_ids=active), history=True)[:100]
 
     def launch(self, session_id: str | None) -> None:
-        from sessions_live import launch_new_session
+        from sessions_live import launch_new_session, session_background
 
-        launch_new_session(resume_session=session_id or None)
+        # The background choice comes only from this PC's stored session
+        # setting. A peer never sends it.
+        launch_new_session(
+            resume_session=session_id or None,
+            background=session_background(session_id or ""),
+        )
 
     def submit(self, session_id: str, text: str) -> list[str]:
         from sessions_live import live_sessions, write_console_input

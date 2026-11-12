@@ -44,6 +44,43 @@ def default_registry() -> Path:
     return default_grok_home() / "active_sessions.json"
 
 
+def session_settings_path(grok_home: Path | None = None) -> Path:
+    home = grok_home if grok_home else default_grok_home()
+    return home / "silvia-dashboard" / "session-settings.json"
+
+
+def load_session_settings(path: Path | None = None) -> dict[str, Any]:
+    target = path if path else session_settings_path()
+    try:
+        data = json.loads(target.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return data if isinstance(data, dict) else {}
+
+
+def session_background(session_id: str, path: Path | None = None) -> bool:
+    key = str(session_id or "").strip()
+    if not key:
+        return False
+    row = load_session_settings(path).get(key)
+    return bool(row.get("background")) if isinstance(row, dict) else False
+
+
+def set_session_background(session_id: str, on: bool, path: Path | None = None) -> None:
+    key = str(session_id or "").strip()
+    if not key:
+        return
+    target = path if path else session_settings_path()
+    data = load_session_settings(target)
+    row = data.get(key)
+    if not isinstance(row, dict):
+        row = {}
+    row["background"] = bool(on)
+    data[key] = row
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(json.dumps(data, ensure_ascii=True, indent=2), encoding="utf-8")
+
+
 def _kernel32() -> ctypes.WinDLL:
     kernel = ctypes.WinDLL("kernel32", use_last_error=True)
     kernel.OpenProcess.argtypes = (wintypes.DWORD, wintypes.BOOL, wintypes.DWORD)
@@ -58,6 +95,14 @@ def _kernel32() -> ctypes.WinDLL:
     )
     kernel.QueryFullProcessImageNameW.restype = wintypes.BOOL
     return kernel
+
+
+def _user32() -> ctypes.WinDLL:
+    user32 = ctypes.WinDLL("user32", use_last_error=True)
+    user32.GetForegroundWindow.restype = wintypes.HWND
+    user32.SetForegroundWindow.argtypes = (wintypes.HWND,)
+    user32.SetForegroundWindow.restype = wintypes.BOOL
+    return user32
 
 
 def inspect_process(pid: int) -> tuple[str, str]:
@@ -708,7 +753,18 @@ class _Started:
         self.pid = pid
 
 
-def _shell_execute(file: str, parameters: str, directory: str) -> _Started:
+def _after_launch(previous_window: int, background: bool) -> None:
+    """Return the owner's window to the front after a visible launch.
+
+    A background launch shows no window, so it leaves the foreground alone and
+    never calls SetForegroundWindow or ShowWindow for the launched copy.
+    """
+    if background or previous_window <= 0:
+        return
+    _user32().SetForegroundWindow(previous_window)
+
+
+def _shell_execute(file: str, parameters: str, directory: str, background: bool = False) -> _Started:
     """Start the pinned launcher in its own console without activating it.
 
     powershell.exe is intercepted by the hidden-helper shim, and that shim
@@ -780,10 +836,11 @@ def _shell_execute(file: str, parameters: str, directory: str) -> _Started:
     command_buf = ctypes.create_unicode_buffer(command)
     env = os.environ.copy()
     env["SILVIA_NOACTIVATE"] = "1"
+    if background:
+        env["SILVIA_HIDDEN"] = "1"
     pairs = [f"{key}={value}" for key, value in env.items() if key and "\0" not in key and "\0" not in str(value)]
     env_buf = ctypes.create_unicode_buffer("\0".join(pairs) + "\0\0")
-    user32 = ctypes.WinDLL("user32", use_last_error=True)
-    user32.GetForegroundWindow.restype = wintypes.HWND
+    user32 = _user32()
     previous = int(user32.GetForegroundWindow() or 0)
     ok = kernel.CreateProcessW(
         image,
@@ -805,10 +862,7 @@ def _shell_execute(file: str, parameters: str, directory: str) -> _Started:
     if pid <= 0:
         raise OSError("the launcher did not return a process")
     time.sleep(1.2)
-    user32.SetForegroundWindow.argtypes = [wintypes.HWND]
-    user32.SetForegroundWindow.restype = wintypes.BOOL
-    if previous:
-        user32.SetForegroundWindow(previous)
+    _after_launch(previous, background)
     return _Started(pid)
 
 
@@ -817,6 +871,7 @@ def launch_new_session(
     *,
     launcher: str | None = None,
     resume_session: str | None = None,
+    background: bool = False,
 ) -> _Started:
     """Start one session with the pinned Alpha shortcut's command.
 
@@ -825,6 +880,8 @@ def launch_new_session(
     A history launch passes -ResumeSession so the launcher runs
     grok --resume=<id> where it would otherwise run grok. No positional
     prompt is added, because that would send a new turn into the session.
+    A background launch starts the copy hidden and keeps the owner's window
+    in front.
     """
     del cwd
     script = Path(launcher) if launcher else alpha_launcher_path()
@@ -833,7 +890,8 @@ def launch_new_session(
     session_id = str(resume_session or "").strip()
     if session_id:
         parameters += f' -ResumeSession "{session_id}"'
-    return _shell_execute(powershell, parameters, r"C:\WINDOWS\system32")
+    options = {"background": True} if background else {}
+    return _shell_execute(powershell, parameters, r"C:\WINDOWS\system32", **options)
 
 
 def start_resume_process(argv: list[str], cwd: str | None) -> subprocess.Popen[Any]:

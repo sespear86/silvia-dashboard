@@ -773,6 +773,13 @@ class SilviaDashboard(tk.Tk):
                     else:
                         self._launch_resumed_session(row)
                     return
+                if page == "sessions" and str(hit.get("id") or "").startswith("background:"):
+                    from sessions_live import session_background, set_session_background
+
+                    sid = str(hit["id"]).split(":", 1)[1]
+                    set_session_background(sid, not session_background(sid))
+                    self.render()
+                    return
                 if page == "sessions" and str(hit.get("id") or "").startswith("session:"):
                     self._open_session_popout(dict(hit.get("session") or {}))
                     return
@@ -2141,6 +2148,8 @@ class SilviaDashboard(tk.Tk):
         openable: bool,
         launch: bool = False,
     ) -> int:
+        from sessions_live import session_background
+
         open_group = self._sessions_section == kind and self._sessions_device == device_id
         self.canvas.create_rectangle(32, y, width - 24, y + 36, fill=pal["card"], outline=pal["accent"] if open_group else "")
         self.canvas.create_text(48, y + 8, text=label, fill=pal["text"], anchor="nw", font=("Segoe UI", 12, "bold"))
@@ -2172,6 +2181,20 @@ class SilviaDashboard(tk.Tk):
             if row.get("pid"):
                 detail = f"{detail}    pid {row.get('pid')}"
             self.canvas.create_text(64, y + 28, text=self._clip(detail, 110), fill=pal["muted"], anchor="nw", font=("Segoe UI", 9))
+            sid = str(row.get("session_id") or "")
+            if sid:
+                on = session_background(sid)
+                tx0, tx1 = width - 152, width - 32
+                self.canvas.create_rectangle(tx0, y + 10, tx1, y + 42, fill=pal["card"], outline=pal["accent"] if on else pal["muted"])
+                self.canvas.create_text(
+                    (tx0 + tx1) // 2,
+                    y + 18,
+                    text="Background on" if on else "Background off",
+                    fill=pal["accent"] if on else pal["muted"],
+                    anchor="n",
+                    font=("Segoe UI", 9, "bold"),
+                )
+                self.hits.append({"id": f"background:{sid}", "x0": tx0, "x1": tx1, "y0": y + 10, "y1": y + 42})
             if openable or launch:
                 kind = "session" if openable else "resume"
                 self.hits.append(
